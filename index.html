@@ -13,14 +13,18 @@
     h1 {
       color: #2a4d69;
     }
-    .alphabet {
+    h2 {
+      color: #2a4d69;
+      margin-top: 3rem;
+    }
+    .alphabet, .combinations {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 1rem;
-      margin-top: 2rem;
+      margin-top: 1rem;
     }
-    .letter, .link-button {
+    .letter, .combo, .link-button {
       background-color: #4a90e2;
       color: white;
       border: none;
@@ -32,7 +36,7 @@
       text-decoration: none;
       display: inline-block;
     }
-    .letter:hover, .link-button:hover {
+    .letter:hover, .combo:hover, .link-button:hover {
       background-color: #357ABD;
     }
     .link-container {
@@ -46,8 +50,13 @@
 </head>
 <body>
   <h1>Alphabet Sound Helper</h1>
-  <p>Click a letter to hear it aloud.</p>
+  <p>Click a letter or combination to hear it aloud.</p>
+
+  <h2>Alphabet Letters</h2>
   <div class="alphabet" id="alphabet"></div>
+
+  <h2>Letter Combinations</h2>
+  <div class="combinations" id="combinations"></div>
 
   <div class="link-container">
     <a href="https://yasinabrahimi.github.io/BrightReads/" target="_blank" class="link-button">Visit our Website!</a>
@@ -55,8 +64,9 @@
   </div> 
 
   <script>
+    // Individual Alphabet
     const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    const container = document.getElementById("alphabet");
+    const alphabetContainer = document.getElementById("alphabet");
 
     alphabet.split("").forEach(letter => {
       const button = document.createElement("button");
@@ -67,7 +77,26 @@
         utterance.lang = "en-US";
         window.speechSynthesis.speak(utterance);
       };
-      container.appendChild(button);
+      alphabetContainer.appendChild(button);
+    });
+
+    // Common English letter sound combinations
+    const combinations = [
+      "CH", "SH", "TH", "PH", "WH", "GH", "KH", "NG",
+      "QU", "CK", "WR", "GN"
+    ];
+    const combinationsContainer = document.getElementById("combinations");
+
+    combinations.forEach(combo => {
+      const button = document.createElement("button");
+      button.textContent = combo;
+      button.className = "combo";
+      button.onclick = () => {
+        const utterance = new SpeechSynthesisUtterance(combo);
+        utterance.lang = "en-US";
+        window.speechSynthesis.speak(utterance);
+      };
+      combinationsContainer.appendChild(button);
     });
   </script>
 </body>
